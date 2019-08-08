@@ -31,7 +31,7 @@ export function As(options:any){
             let params = Reflect.getMetadata(PARAMTER_OPTION,target)||[];
             params.push({
                 index,
-                provide:options
+                identifier:options
             })
 
             Reflect.defineMetadata(PARAMTER_OPTION,params,target)

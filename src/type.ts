@@ -11,7 +11,7 @@ export interface InjectOptions {
 
 
 
-export const PARAMTER_OPTION = Symbol.for("paramter-option")
+export const PARAMTER_OPTION = "design:slick-for:parameter"
 
 
 export const SCOPE_OPTION = Symbol.for("scope-options")
