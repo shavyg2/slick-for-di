@@ -5,11 +5,6 @@ export interface ClassOptions {
     scope?:RequestScope;
 }
 
-export interface InjectOptions {
-    
-}
-
-
 
 export const PARAMTER_OPTION = "design:slick-for:parameter"
 

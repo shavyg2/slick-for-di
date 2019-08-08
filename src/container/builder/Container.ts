@@ -44,10 +44,7 @@ export class Container implements IContainer {
         }
 
         if (provider.inject && provider.inject.length) {
-
-            let injectScope = this.getScopeOfInjects(provider.inject);
-            let  scope = ScopePicker.pickList(provider.scope,...injectScope);
-            scope = provider.scope || "Singleton";
+            let scope = provider.scope || "Singleton";
             
             switch(scope){
                 case "Singleton":
@@ -147,44 +144,5 @@ export class Container implements IContainer {
         return `${identifier}`;
     }
 
-
-    private getScopeOfInjects(injects:any[]){
-        let scopes = injects.map(inject=>{
-            let dependency = this.providers.find(x=>x.provide === inject)
-
-            if(!dependency){
-                throw new Error(`Dependency not found for ${inject}`)
-            }
-
-
-            return dependency.scope;
-        })
-
-        return scopes;
-    }
-
-
-
-    private scopePicker(scope1:Scope,scope2:Scope,options = ["Transient","Request","Singleton"]){
-        return [scope1,scope2].sort((a,b)=>{
-            return options.indexOf(a) - options.indexOf(b)
-        })[0];
-    }
 }
 
-
-export class ScopePicker{
-
-    public static pickList(...scopes:Scope[]){
-        return scopes.reduce((a,b)=>{
-            return this.pick(a,b)
-        },"Singleton");
-    }
-    
-    public static pick(scope1:Scope,scope2:Scope,options = ["Transient","Request","Singleton"]){
-        return [scope1,scope2].sort((a,b)=>{
-            return options.indexOf(a) - options.indexOf(b)
-        })[0];
-    }
-
-}
