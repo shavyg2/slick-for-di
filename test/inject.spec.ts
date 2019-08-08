@@ -1,4 +1,4 @@
-import Container,{ As } from '../src';
+import Container,{ As, Options } from '../src';
 
 const simpleService = Symbol.for("simple");
 
@@ -9,6 +9,10 @@ const provider = {
     }
 }
 
+
+@Options({
+    scope:"Singleton"
+})
 class Controller{
     constructor(@As(simpleService) public simple:string){
         
@@ -26,6 +30,7 @@ describe("Injection Test",()=>{
     builder.add(Controller);
 
     test("Simple From Factory",async()=>{
+        debugger;
         const controller = await container.get<Controller>(Controller) as Controller;
 
         expect(controller).toBeInstanceOf(Controller);

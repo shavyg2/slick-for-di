@@ -8,8 +8,8 @@ export function ProviderFromConstructor(constructor: IConstructor) {
   const overrideParams = Reflect.getMetadata(PARAMTER_OPTION,constructor) || []
 
 
-  overrideParams.forEach(({index,provide})=>{
-    originalParams.splice(index,1,provide)
+  overrideParams.forEach(({index,identifier})=>{
+    originalParams.splice(index,1,identifier)
   })
 
 
