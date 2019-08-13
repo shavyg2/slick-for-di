@@ -1,11 +1,5 @@
 import { ClassOptions, SCOPE_OPTION, PARAMTER_OPTION } from '../type';
 
-
-
-
-
-
-
 export function Options(options:ClassOptions){
 
     let decorator =  (DecoratedController:any,method:string)=>{
