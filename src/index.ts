@@ -13,6 +13,13 @@ export default class DiContainer{
     
     constructor(){
         this.container = ContainerBuilder.getContainer(this.builder);
+        
+    }
+
+
+
+    isBound(identifier:any){
+        return this.container.isBound(identifier);
     }
 
 
