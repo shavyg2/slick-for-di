@@ -1,12 +1,13 @@
 import { ClassOptions, SCOPE_OPTION, PARAMETER_OPTION } from '../type';
 
-export function Options(options:ClassOptions){
+export function Options(options:ClassOptions = {scope:"Singleton"}){
 
     let decorator =  (DecoratedController:any,method:string)=>{
 
         if(method){
             console.log("Method Decorator")
         }else{
+            options.scope = options.scope || "Singleton";
             Reflect.defineMetadata(SCOPE_OPTION,options.scope,DecoratedController);
         }
         return DecoratedController;    

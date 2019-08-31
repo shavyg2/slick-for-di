@@ -12,7 +12,6 @@ export function ProviderFromConstructor(constructor: IConstructor) {
     originalParams.splice(index,1,identifier)
   })
 
-  debugger;
   const scope = Reflect.getMetadata(SCOPE_OPTION,constructor);
 
 

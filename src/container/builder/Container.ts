@@ -104,7 +104,6 @@ export class Container implements IContainer {
                     return instance
                 })
             }else{
-                debugger;
                 const instance =  provider.useFactory(...dependencies);
                 cache.set(provider.provide,instance);
                 return instance;
