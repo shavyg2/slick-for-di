@@ -1,4 +1,4 @@
-import { ClassOptions, SCOPE_OPTION, PARAMTER_OPTION } from '../type';
+import { ClassOptions, SCOPE_OPTION, PARAMETER_OPTION } from '../type';
 
 export function Options(options:ClassOptions){
 
@@ -22,13 +22,13 @@ export function As(options:any){
             console.log("instance")
         }else{
 
-            let params = Reflect.getMetadata(PARAMTER_OPTION,target)||[];
+            let params = Reflect.getMetadata(PARAMETER_OPTION,target)||[];
             params.push({
                 index,
                 identifier:options
             })
 
-            Reflect.defineMetadata(PARAMTER_OPTION,params,target)
+            Reflect.defineMetadata(PARAMETER_OPTION,params,target)
         }
     }
 

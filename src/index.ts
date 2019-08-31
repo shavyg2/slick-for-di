@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import { Container } from './container/builder/Container';
 import { ContainerBuilder } from './container/config/ContainerBuilder';
 
@@ -8,8 +9,8 @@ export * from "./decorators/options";
 
 export default class DiContainer{
 
-    builder:ContainerBuilder =new ContainerBuilder();
-    container:Container
+    private builder:ContainerBuilder = new ContainerBuilder();
+    private container:Container
     
     constructor(){
         this.container = ContainerBuilder.getContainer(this.builder);

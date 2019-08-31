@@ -5,7 +5,7 @@ import { ProviderFromConstructor } from "./ProviderFromConstructor";
 import { ProviderFromValue } from "./ProviderFromValue";
 import { Container, Scope } from '../builder/Container';
 export class ContainerBuilder implements IContainerBuilder {
-    private providers: FactoryProvider[] = [];
+    private providers = [] as FactoryProvider[];
 
 
     bind(provider){
@@ -19,11 +19,12 @@ export class ContainerBuilder implements IContainerBuilder {
             return this.add(ProviderFromValue(provider));
         }
         else if (check.IsUseFactory(provider)) {
+            let factoryProvider:FactoryProvider = provider;
             let scope:RequestScope = provider.scope || "Singleton";
             let inject  = provider.inject || [];
             provider.scope = scope;
             provider.inject = inject;
-            this.providers.push(provider);
+            this.providers.push(factoryProvider);
         }
         else {
             throw new Error("not a valid provider");
@@ -31,6 +32,7 @@ export class ContainerBuilder implements IContainerBuilder {
         return this;
     }
     static getContainer(builder: ContainerBuilder) {
+        
         return new Container(builder.providers);
     }
 }

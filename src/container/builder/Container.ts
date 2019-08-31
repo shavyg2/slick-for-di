@@ -2,21 +2,35 @@ import { FactoryProvider, SCOPE } from "../Provider";
 import uuid from "uuid/v4";
 import isPromise from "is-promise";
 import { IContainer } from "./IContainer";
+import is from "@sindresorhus/is";
 
 
 export type Scope = "Request"|"Transient"|"Singleton"
 
 export class Container implements IContainer {
+    
+    private lookup = new Map<any,FactoryProvider>()
     cache = {
         Request: new Map<any, Map<any, any>>(),
         Singleton: new Map<any, any>()
     };
     constructor(private providers: FactoryProvider[]) {
+        this.providers.forEach(provider=>{
+            this.lookup.set(provider.provide,provider);
+        })
     }
 
 
     isBound(identifier:any){
         return !!this.providers.find(x=>x.provide===identifier)
+    }
+    
+    isInLookup(identifier:any){
+        return this.lookup.has(identifier);
+    }
+    
+    slowLookUp(identifier:any){
+        return this.providers.reverse().find(x=>x.provide===identifier)
     }
 
 
@@ -38,9 +52,11 @@ export class Container implements IContainer {
     }
 
     build(identifier: any, requestID: string) {
-        let provider = this.providers.find(x => x.provide === identifier);
+        let provider = this.isInLookup(identifier)?this.lookup.get(identifier):this.slowLookUp(identifier)
         if (!provider) {
             throw new Error(`No Provider for identifier ${this.printIdentifier(identifier)}`);
+        }else if(!this.isInLookup(identifier)){
+            this.lookup.set(identifier,provider);
         }
 
         if (provider.inject && provider.inject.length) {
@@ -88,6 +104,7 @@ export class Container implements IContainer {
                     return instance
                 })
             }else{
+                debugger;
                 const instance =  provider.useFactory(...dependencies);
                 cache.set(provider.provide,instance);
                 return instance;
@@ -141,7 +158,12 @@ export class Container implements IContainer {
     }
     
     private printIdentifier(identifier: any) {
-        return `${identifier}`;
+
+        if(is.function_(identifier)){
+            return `${identifier.name}`
+        }else{
+            return `${identifier}`;
+        }
     }
 
 }

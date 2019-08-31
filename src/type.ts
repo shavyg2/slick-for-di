@@ -6,7 +6,7 @@ export interface ClassOptions {
 }
 
 
-export const PARAMTER_OPTION = "design:slick-for:parameter"
+export const PARAMETER_OPTION = "design:slick-for:parameter"
 
 
 export const SCOPE_OPTION = Symbol.for("scope-options")
